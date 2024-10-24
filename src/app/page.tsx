@@ -4,6 +4,7 @@ import { Advocate } from './types'
 import SearchInput from './components/search-input'
 
 import { useState, useCallback } from "react";
+import AdvocateTable from './components/advocate-list';
 
 export default function Home() {
   const [advocateSearchResult, setAdvocateSearchResult] = useState<Advocate[]>([]);
@@ -31,47 +32,18 @@ export default function Home() {
   }, [])
 
   return (
-    <main style={{ margin: "24px" }}>
-      <h1>Solace Advocates</h1>
-      <br />
+    <main className='m-6'>
+      <header className="bg-gradient-to-b from-green-800 to-white shadow-md p-4 h-20 flex items-center justify-center rounded-lg">
+        <h1 className="text-2xl font-bold text-white">Solace Advocates</h1>
+      </header>
       <br />
       <div>
         <SearchInput onSearch={onSearch} onClear={onClear} loading={loading} />
       </div>
       <br />
-      <br />
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>City</th>
-            <th>Degree</th>
-            <th>Specialties</th>
-            <th>Years of Experience</th>
-            <th>Phone Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          {advocateSearchResult.map((advocate) => {
-            return (
-              <tr key={advocate.id}>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
-                  {advocate.specialties.map((s) => (
-                    <div key={s}>{s}</div>
-                  ))}
-                </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div>
+        <AdvocateTable advocates={advocateSearchResult} />
+      </div>
     </main>
   );
 }
