@@ -2,22 +2,20 @@ import { sql } from "drizzle-orm";
 import {
   pgTable,
   integer,
-  text,
-  jsonb,
   serial,
   timestamp,
-  bigint,
+  varchar,
 } from "drizzle-orm/pg-core";
 
 const advocates = pgTable("advocates", {
   id: serial("id").primaryKey(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
-  city: text("city").notNull(),
-  degree: text("degree").notNull(),
-  specialties: jsonb("payload").default([]).notNull(),
+  firstName: varchar("first_name", { length: 200 }).notNull(),
+  lastName: varchar("last_name", { length: 200 }).notNull(),
+  city: varchar("city", { length: 200 }).notNull(),
+  degree: varchar("degree", { length: 5 }).notNull(),
+  specialties: varchar("specialties", { length: 200 }).array().notNull(),
   yearsOfExperience: integer("years_of_experience").notNull(),
-  phoneNumber: bigint("phone_number", { mode: "number" }).notNull(),
+  phoneNumber: varchar("phone_number", { length: 20 }).notNull(),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
